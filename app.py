@@ -140,11 +140,13 @@ def repol_plot(repol, repolfitdata):
     fig = go.Figure(data=data, layout=layout)
     return fig
 
-def ds_vs_lp(data):
-    hovertemp ='<B>Power Red(%)</B>: %{x}'+'<br><b>Asymmetry(%)</b>: %{y}<extra></extra>'
+def ds_vs_lp(data, df2016):
+    hovertemp ='<B>Power Red</B>: %{x}'+'<br><b>Asymmetry</b>: %{y}<extra></extra>'
     
-    fig1 = go.Scatter(
-        name=r'$\text{B=2750 / } \sigma^{-} - \sigma^{+} \text{ / May 2017}$',x=data.loc[(data['B-Field(G)'] == 2750) & (data['QWP Pos'] == 0)]['Power Drop'].values*100,y=data.loc[(data['B-Field(G)'] == 2750) & (data['QWP Pos'] == 0)]['Asym Diff'].values*100,
+    fig4 = go.Scatter(
+        name=r'$\text{B=2750 / } \sigma^{-} - \sigma^{+} \text{ / May 2017}$',
+        x=data.loc[(data['B-Field(G)'] == 2750) & (data['QWP Pos'] == 0)]['Power Drop'].values*100,
+        y=data.loc[(data['B-Field(G)'] == 2750) & (data['QWP Pos'] == 0)]['Asym Diff'].values*100,
         mode='markers', marker_color='rgb(200,0,0)', marker_symbol=105, marker_size=15, marker_line_width=3,
         hovertemplate=hovertemp,
         error_y=dict(
@@ -155,7 +157,9 @@ def ds_vs_lp(data):
             thickness=1)
     )
     fig2 = go.Scatter(
-        name=r'$\text{B=-2750 / } \sigma^{-} - \sigma^{+} \text{ / May 2017}$',x=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 0)]['Power Drop'].values*100,y=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 0)]['Asym Diff'].values*100,
+        name=r'$\text{B=-2750 / } \sigma^{-} - \sigma^{+} \text{ / May 2017}$',
+        x=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 0)]['Power Drop'].values*100,
+        y=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 0)]['Asym Diff'].values*100,
         mode='markers', marker_color='rgb(0,0,0)', marker_symbol=105, marker_size=15, marker_line_width=3,
         hovertemplate=hovertemp,
         error_y=dict(
@@ -166,7 +170,9 @@ def ds_vs_lp(data):
             thickness=1)   
     )
     fig3 = go.Scatter(
-        name=r'$\text{B=2750 / } \sigma^{+} - \sigma^{-} \text{ / May 2017}$',x=data.loc[(data['B-Field(G)'] == 2750) & (data['QWP Pos'] == 1)]['Power Drop'].values*100,y=data.loc[(data['B-Field(G)'] == 2750) & (data['QWP Pos'] == 1)]['Asym Diff'].values*100,
+        name=r'$\text{B=2750 / } \sigma^{+} - \sigma^{-} \text{ / May 2017}$',
+        x=data.loc[(data['B-Field(G)'] == 2750) & (data['QWP Pos'] == 1)]['Power Drop'].values*100,
+        y=data.loc[(data['B-Field(G)'] == 2750) & (data['QWP Pos'] == 1)]['Asym Diff'].values*100,
         mode='markers',marker_color='rgb(200,0,0)', marker_symbol=101, marker_size=15, marker_line_width=3,
         hovertemplate=hovertemp,
         error_y=dict(
@@ -176,8 +182,10 @@ def ds_vs_lp(data):
             color='darkgray',
             thickness=1)       
     )
-    fig4 = go.Scatter(
-        name=r'$\text{B=-2750 / } \sigma^{+} - \sigma^{-} \text{ / May 2017}$',x=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 1)]['Power Drop'].values*100,y=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 1)]['Asym Diff'].values*100,
+    fig1 = go.Scatter(
+        name=r'$\text{B=-2750 / } \sigma^{+} - \sigma^{-} \text{ / May 2017}$',
+        x=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 1)]['Power Drop'].values*100,
+        y=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 1)]['Asym Diff'].values*100,
         mode='markers',marker_color='rgb(0,0,0)', marker_symbol=101, marker_size=15, marker_line_width=3,
         hovertemplate=hovertemp,
         error_y=dict(
@@ -190,6 +198,34 @@ def ds_vs_lp(data):
     fig5 = go.Scatter(
         name='origin line', x=[0,70], y=[0,0],
         mode='lines', line_width=2, line_color='rgb(0,0,0)', showlegend=False)
+    
+    fig6 = go.Scatter(
+        name=r'$\text{B=2750 / } \sigma^{+} - \sigma^{-} \text{ / Feb 2016}$',
+        x=df2016.loc[(df2016['B-Field(G)'] == 2750) & (df2016['QWP Pos'] == 0)]['Power Drop'].values*100,
+        y=df2016.loc[(df2016['B-Field(G)'] == 2750) & (df2016['QWP Pos'] == 0)]['Asym Diff'].values*100,
+        mode='markers',marker_color='rgb(0,128,0)', marker_symbol=101, marker_size=15, marker_line_width=3,
+        hovertemplate=hovertemp,
+        error_y=dict(
+            type='data',
+            array=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 1)]['Asym Diff Err'].values*100,
+            visible=True,
+            color='darkgray',
+            thickness=1)  
+    )
+    
+    fig7 = go.Scatter(
+        name=r'$\text{B=2750 / } \sigma^{+} - \sigma^{-} \text{ / Feb 2017}$',
+        x=df2016.loc[(df2016['B-Field(G)'] == 2750) & (df2016['QWP Pos'] == 1)]['Power Drop'].values*100,
+        y=df2016.loc[(df2016['B-Field(G)'] == 2750) & (df2016['QWP Pos'] == 1)]['Asym Diff'].values*100,
+        mode='markers',marker_color='rgb(0,128,0)', marker_symbol=105, marker_size=15, marker_line_width=3,
+        hovertemplate=hovertemp,
+        error_y=dict(
+            type='data',
+            array=data.loc[(data['B-Field(G)'] == -2750) & (data['QWP Pos'] == 1)]['Asym Diff Err'].values*100,
+            visible=True,
+            color='darkgray',
+            thickness=1)  
+    )
     
     #create layout of plot    
     layout = go.Layout(
@@ -216,7 +252,7 @@ def ds_vs_lp(data):
         plot_bgcolor='rgb(255,255,255)',        
         showlegend = True)
     
-    fig = go.Figure(data=[fig1, fig2, fig3, fig4, fig5], layout=layout)
+    fig = go.Figure(data=[fig1, fig2, fig3, fig4, fig5, fig6, fig7], layout=layout)
 
 
     return fig
@@ -496,8 +532,8 @@ def lsat_plot(laser_sat, laser_sat_data):
 #Setup data to be displayed
 ###############################################################################
 #setting the directory and grabbing the filenames
-directory="https://raw.githubusercontent.com/inelastic/May-2017-App/master/ProcessedCSV/"
-#directory="F:/Storage/Documents/Python Files/RALAnalysis/May-2017-App/ProcessedCSV/"
+#directory="https://raw.githubusercontent.com/inelastic/May-2017-App/master/ProcessedCSV/"
+directory="F:/Storage/Documents/Python Files/RALAnalysis/May-2017-App/ProcessedCSV/"
 filenames = filenames = pd.read_csv(directory+'listfile.txt', names=['Name'])
 filenames.drop(filenames.tail(1).index,inplace=True)
 filenames = filenames['Name'].values
@@ -505,6 +541,7 @@ filenames = filenames.astype(int)
 
 
 fitdata = pd.read_csv(directory+'fitdata.csv', index_col=0)
+data2016 = pd.read_csv(directory+'data2016.csv', index_col=0)
 
 #re-indexing fitdata to use in graphs
 
@@ -530,7 +567,7 @@ for i in range(len(filenames)):
         
 
 #Create PvsLP 
-pvslp = ds_vs_lp(fitdata)
+pvslp = ds_vs_lp(fitdata, data2016)
                     
 ###############################################################################
 #Build Dash App
